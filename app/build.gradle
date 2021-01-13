@@ -12,6 +12,9 @@ android {
         versionName project.VERSION_NAME
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        vectorDrawables.useSupportLibrary = true
+
+        multiDexEnabled true
     }
 
     buildTypes {
@@ -24,53 +27,77 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
         sourceCompatibility JavaVersion.VERSION_1_8
     }
+
+    dataBinding {
+        enabled = true
+    }
 }
 
 dependencies {
-    implementation fileTree(dir: "libs", include: ["*.jar"])
-    implementation "androidx.appcompat:appcompat:${project.ANDROID_X_VERSION}"
-    implementation "androidx.percentlayout:percentlayout:${project.ANDROID_X_VERSION}"
-    implementation "androidx.recyclerview:recyclerview:${project.ANDROID_X_VERSION}"
-    implementation "androidx.cardview:cardview:${project.ANDROID_X_VERSION}"
-    implementation "com.google.android.material:material:${project.ANDROID_X_MATERIAL_VERSION}"
-    implementation "androidx.constraintlayout:constraintlayout:${project.CONSTRAINTLAYOUT_VERSION}"
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation 'androidx.appcompat:appcompat:1.0.2'
+    implementation 'com.google.android.material:material:1.0.0'
+    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
+    implementation 'androidx.navigation:navigation-fragment:2.0.0'
+    implementation 'androidx.navigation:navigation-ui:2.0.0'
+    implementation 'androidx.lifecycle:lifecycle-extensions:2.0.0'
+    //Room
+    implementation 'android.arch.persistence.room:runtime:2.0.0'
+    annotationProcessor "android.arch.persistence.room:compiler:2.0.0"
+    //lifecycle
+    implementation "android.arch.lifecycle:common-java8:1.1.1"
     testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.2'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.0'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
 
     //butterknife
     api "com.jakewharton:butterknife:${project.BUTTERKNIFE_VERSION_CODE}"
     annotationProcessor "com.jakewharton:butterknife-compiler:${project.BUTTERKNIFE_VERSION_CODE}"
-    // Leakcanary
-//    debugImplementation "com.squareup.leakcanary:leakcanary-android:${project.LEAKCANARY_VERSION_CODE}"
-//    releaseImplementation "com.squareup.leakcanary:leakcanary-android-no-op:${project.LEAKCANARY_VERSION_CODE}"
-    // AndPermission
-    api "com.yanzhenjie:permission:${project.ANDPERMISSION_VERSION_CODE}"
-    //gson
-    api "com.google.code.gson:gson:${project.GSON_VERSION_CODE}"
-//    //smartTabLayout
-//    api "com.ogaclejapan.smarttablayout:library:${project.SMARTTABLAYOUT_VERSION_CODE}"
-//    api "com.ogaclejapan.smarttablayout:utils-v13:${project.SMARTTABLAYOUT_VERSION_CODE}"
-//    //SmartRefreshLayout下拉刷新上拉加载详解
-//    api "com.scwang.smartrefresh:SmartRefreshLayout:${project.SMARTREFRESHLAYOUT_VERSION_CODE}"
-//    api "com.scwang.smartrefresh:SmartRefreshHeader:${project.SMARTREFRESHLAYOUT_VERSION_CODE}"
-//    //statusbarutil https://github.com/laobie/StatusBarUtil
-//    api "com.jaeger.statusbarutil:library:${project.STATUSBARUTIL_VERSION_CODE}"
-    // retrofit2 + rxjava2
-    api "com.squareup.retrofit2:retrofit:${project.RETROFIT_VERSION_CODE}"
-    api "com.squareup.retrofit2:converter-gson:${project.RETROFIT_VERSION_CODE}"
-    api "com.squareup.retrofit2:adapter-rxjava2:${project.RETROFIT_VERSION_CODE}"
-    api "io.reactivex.rxjava2:rxandroid:${project.RXANDROID_VERSION_CODE}"
-    api "io.reactivex.rxjava2:rxjava:${project.RXJAVA_VERSION_CODE}"
-    api 'com.squareup.okhttp3:logging-interceptor:3.4.1'
-    api 'com.squareup.okhttp3:logging-interceptor:3.4.1'
 
-//    // Room components
-//    implementation "android.arch.persistence.room:runtime:${project.ROOM_VERSION_CODE}"
-//    annotationProcessor "android.arch.persistence.room:compiler:${project.ROOM_VERSION_CODE}"
-//    androidTestImplementation "android.arch.persistence.room:testing:${project.ROOM_VERSION_CODE}"
-//    //glide
-//    api "com.github.bumptech.glide:glide:${project.GLIDE_VERSION_CODE}"
-//    annotationProcessor "com.github.bumptech.glide:compiler:${project.GLIDE_VERSION_CODE}"
+    //Qmui
+    implementation 'com.qmuiteam:qmui:2.0.0-alpha02'
+    //    retrofit2
+    implementation 'com.squareup.retrofit2:retrofit:2.4.0'
+    implementation 'com.squareup.retrofit2:adapter-rxjava2:2.4.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.4.0'
+    //    RxJava
+    implementation 'io.reactivex.rxjava2:rxandroid:2.0.2'
+    implementation 'io.reactivex.rxjava2:rxjava:2.1.12'
+    //    glide
+    implementation 'com.github.bumptech.glide:glide:4.6.1'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.6.1'
+
+    //glide 高斯模糊
+    implementation 'jp.wasabeef:glide-transformations:4.1.0'
+
+    //banner
+    implementation 'com.github.pinguo-zhouwei:MZBannerView:v2.0.0'
+
+    //下拉刷新
+    implementation 'com.scwang.smart:refresh-layout-kernel:2.0.0-alpha-1'      //核心必须依赖
+    implementation 'com.scwang.smart:refresh-header-classics:2.0.0-alpha-1'
+    implementation  'com.scwang.smart:refresh-header-two-level:2.0.0-alpha-1'   //二级刷新头
+
+    //agentweb (WebView)
+    implementation 'com.just.agentweb:agentweb:4.1.2'
+
+    //hawk数据存储
+    implementation "com.orhanobut:hawk:2.0.1"
+
+    //PopTabView 条件筛选view
+    implementation 'me.ccj.PopsTabView:poptabview_lib:1.5.0'
+
+    // 流式布局
+    implementation 'com.google.android:flexbox:2.0.1'
+    //竖向TabLayout
+    implementation 'q.rorbin:VerticalTabLayout:1.2.5'
+
+    //图片/视频选择、预览、编辑与拍照
+    implementation 'com.github.guoxiaoxing:phoenix:1.0.15'
+    //选填 - 图片压缩，开启功能：Phoenix.with().enableCompress(true)，获取结果：MediaEntity.getCompressPath()
+    implementation 'com.github.guoxiaoxing:phoenix-compress-picture:1.0.15'
+
+    implementation 'androidx.legacy:legacy-support-v4:+'
+    implementation 'androidx.lifecycle:lifecycle-extensions:+'
 
 }
