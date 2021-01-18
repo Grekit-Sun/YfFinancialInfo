@@ -13,4 +13,12 @@
     <string name="error_network">当前网络不可用，请检查您的网络连接</string>
     <string name="error_parse">解析错误</string>
     <string name="error_ssl">SSL错误</string>
+
+    <!--  NAV string  -->
+    <string name="menu_home">主页</string>
+    <string name="menu_video">短视频</string>
+    <string name="menu_collect">收藏</string>
+    <string name="menu_square">广场</string>
+    <string name="menu_me">我</string>
+
 </resources>
