@@ -7,6 +7,14 @@ package com.yifan.yffinancialinfo.config;
  */
 public final class Constants {
 
+    public static final class News {
+        public static final String APP_KEY = "aac74fd8d788b0adf58cb557b8f5c721";
+    }
+
+    public static final class UMeng {
+        public static final String APP_KEY = "601cec4a425ec25f10ed8de6";
+    }
+
     public static final class ParamCode {
         public static final String KEY_URL = "key_url";
         public static final String PARAM1 = "param_1";
@@ -24,7 +32,6 @@ public final class Constants {
 
     public static final class RequestCode {
         public static int SELECT_PICTURE = 10000;
-
     }
 
 }

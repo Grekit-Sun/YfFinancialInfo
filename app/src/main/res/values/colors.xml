@@ -1,6 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#6200EE</color>
-    <color name="colorPrimaryDark">#3700B3</color>
-    <color name="colorAccent">#03DAC5</color>
+    <color name="colorPrimary">#455A64</color>
+    <color name="colorPrimaryDark">#4F636C</color>
+    <color name="colorAccent">#D81B60</color>
+
+    <!--MD 字体颜色-->
+    <color name="text_black_87">#D4000000</color>
+    <color name="text_black_54">#8A000000</color>
+    <color name="text_black_26">#42000000</color>
+    <color name="text_black_12">#1E000000</color>
+
+    <!-- 标准颜色-->
+    <color name="color_white">#FFFFFF</color>
+    <color name="color_black">#000000</color>
+    <color name="color_red">#F44336</color>
+    <color name="color_green">#4CAF50</color>
+    <color name="color_blue">#2196f3</color>
+    <color name="color_grey">#9E9E9E</color>
+    <color name="color_grey_dark">#616161</color>
+    <color name="color_grey_light">#F5F5F5</color>
+    <color name="color_transparent">#00000000</color>
+    <color name="color_background">#515151</color>
+    <color name="color_transparent_bg">#80FFFFFF</color>
+    <color name="background">#f0eff4</color>
+
+    <!--LOGO颜色-->
+    <color name="color_4a5a64">#4A5A64</color>
+    <color name="color_4f636c">#4F636C</color>
+    <color name="color_929ea4">#929EA4</color>
+
+    <color name="color_1967d2">#1967D2</color>
+    <color name="color_1452a8">#1452A8</color>
+
+    <color name="color_fbbc04">#FBBC04</color>
+    <color name="color_e37400">#E37400</color>
+
+    <color name="color_6cae4e">#6CAE4E</color>
+    <color name="color_78c257">#78C257</color>
+
+    <color name="color_757575">#757575</color>
+    <color name="color_c6c6c6">#C6C6C6</color>
+    <color name="color_9e9e9e">#9E9E9E</color>
+    <color name="color_5e5e5e">#5E5E5E</color>
+
+    <!--QMUI主题色-->
+    <color name="app_color_theme_1">#EF5362</color> <!-- Grapefruit -->
+    <color name="app_color_theme_2">#FE6D4B</color> <!-- Bittersweet -->
+    <color name="app_color_theme_3">#FFCF47</color> <!-- Sunflower -->
+    <color name="app_color_theme_4">#9FD661</color> <!-- Grass -->
+    <color name="app_color_theme_5">#3FD0AD</color> <!-- Mint -->
+    <color name="app_color_theme_6">#2BBDF3</color> <!-- Aqua -->
+    <color name="app_color_theme_7">#5A9AEF</color> <!-- Blue Jeans -->
+    <color name="app_color_theme_8">#AC8FEF</color> <!-- Lavender -->
+    <color name="app_color_theme_9">#EE85C1</color> <!-- Pink Rose -->
+
 </resources>
