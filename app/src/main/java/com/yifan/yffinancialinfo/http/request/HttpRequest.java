@@ -12,7 +12,7 @@ public class HttpRequest {
         if (Instance == null) {
             synchronized (HttpRequest.class) {
                 if (Instance == null) {
-                    Instance = HttpFactory.getInstance(ApiAddress.class);
+                    Instance = HttpFactory.getDefaultInstance(ApiAddress.class);
                 }
             }
         }
@@ -20,7 +20,6 @@ public class HttpRequest {
     }
 
     public static ApiAddress getInstance(String url) {
-        return HttpFactory.getChangeUrlInstance(url, ApiAddress.class);
+        return HttpFactory.getSpecialUrlInstance(url, ApiAddress.class);
     }
-
 }

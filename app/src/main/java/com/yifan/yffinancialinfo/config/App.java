@@ -38,6 +38,7 @@ public class App extends MultiDexApplication {
         firstOpen = true;
         context = this;
         initActivityManager();
+        init();
     }
 
     public static Context getContext() {

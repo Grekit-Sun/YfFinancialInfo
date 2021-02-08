@@ -23,7 +23,7 @@
             android:textColor="@color/color_fbbc04"
             android:drawableRight="@mipmap/ic_hot"
             android:drawablePadding="@dimen/dimen_8"
-            android:text="@{topArticle.name}" />
+             />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_view"

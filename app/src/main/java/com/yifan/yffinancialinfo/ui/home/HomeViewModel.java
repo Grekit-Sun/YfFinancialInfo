@@ -7,11 +7,20 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.yifan.yffinancialinfo.base.viewmodel.BaseViewModel;
 import com.yifan.yffinancialinfo.bean.responsebean.home.HomeData;
+import com.yifan.yffinancialinfo.bean.responsebean.home.NewsData;
+import com.yifan.yffinancialinfo.config.Constants;
 import com.yifan.yffinancialinfo.config.LoadState;
+import com.yifan.yffinancialinfo.http.data.HttpDisposable;
+import com.yifan.yffinancialinfo.http.request.HttpFactory;
+import com.yifan.yffinancialinfo.http.request.HttpRequest;
 import com.yifan.yffinancialinfo.util.NetworkUtils;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+import io.reactivex.functions.Consumer;
 
 /**
  * @Description:
@@ -22,6 +31,7 @@ public class HomeViewModel extends BaseViewModel {
 
     private MutableLiveData<List<HomeData>> mHomeList;
     private List<HomeData> mList;
+    private static final String URL_WY_JD = "https://way.jd.com";
 
     /**
      * 请求页码
@@ -56,6 +66,7 @@ public class HomeViewModel extends BaseViewModel {
 
         if (NetworkUtils.isConnected() && NetworkUtils.getWifiEnabled()) {
             loadBannerByNet();
+            loadNewsByNet();
         } else {
             loadBannerByDb();
         }
@@ -65,5 +76,38 @@ public class HomeViewModel extends BaseViewModel {
      * 从网络接口获取Banner
      */
     private void loadBannerByNet() {
+
+    }
+
+    /**
+     * 从网络接口获取Banner
+     */
+    private void loadBannerByDb() {
+    }
+
+
+    /**
+     * 从网络接口获取news
+     */
+    private void loadNewsByNet() {
+        Map<String, Object> map = new HashMap<>();
+        map.put("appkey", Constants.News.APP_KEY);
+        map.put("channel", "头条");
+        map.put("num", 10);
+        map.put("start", 0);
+        HttpRequest.getInstance(URL_WY_JD)
+                .getHomeData(map)
+                .compose(HttpFactory.Flowableschedulers())
+                .subscribe(new Consumer<List<NewsData>>() {
+                    @Override
+                    public void accept(List<NewsData> newsData) throws Exception {
+                        Log.d("RXjava:", newsData.toString());
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(Throwable throwable) throws Exception {
+                        Log.e("RXjava:", "onError:" + throwable.toString());
+                    }
+                });
     }
 }

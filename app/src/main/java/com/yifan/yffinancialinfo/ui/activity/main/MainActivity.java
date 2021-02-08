@@ -46,8 +46,8 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
         }
         mToolbar.setTitle(R.string.app_name);
         setSupportActionBar(mToolbar);
-
     }
+
 
     /**
      * 初始化侧边栏用户信息
