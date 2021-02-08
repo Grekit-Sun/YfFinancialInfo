@@ -6,11 +6,11 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.yifan.yffinancialinfo.base.viewmodel.BaseViewModel;
+import com.yifan.yffinancialinfo.bean.responsebean.base.BaseBackMsg;
 import com.yifan.yffinancialinfo.bean.responsebean.home.HomeData;
-import com.yifan.yffinancialinfo.bean.responsebean.home.NewsData;
+import com.yifan.yffinancialinfo.bean.responsebean.home.NewData;
 import com.yifan.yffinancialinfo.config.Constants;
 import com.yifan.yffinancialinfo.config.LoadState;
-import com.yifan.yffinancialinfo.http.data.HttpDisposable;
 import com.yifan.yffinancialinfo.http.request.HttpFactory;
 import com.yifan.yffinancialinfo.http.request.HttpRequest;
 import com.yifan.yffinancialinfo.util.NetworkUtils;
@@ -98,10 +98,10 @@ public class HomeViewModel extends BaseViewModel {
         HttpRequest.getInstance(URL_WY_JD)
                 .getHomeData(map)
                 .compose(HttpFactory.Flowableschedulers())
-                .subscribe(new Consumer<List<NewsData>>() {
+                .subscribe(new Consumer<BaseBackMsg<NewData>>() {
                     @Override
-                    public void accept(List<NewsData> newsData) throws Exception {
-                        Log.d("RXjava:", newsData.toString());
+                    public void accept(BaseBackMsg<NewData> newsData) throws Exception {
+                        Log.d("RXjava:", newsData.code);
                     }
                 }, new Consumer<Throwable>() {
                     @Override
