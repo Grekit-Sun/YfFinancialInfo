@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <data>
-
-        <variable
-            name="newsData"
-            type="com.yifan.yffinancialinfo.bean.responsebean.home.HomeData.YfNews" />
-    </data>
+<!--    <data>-->
+<!--        <variable-->
+<!--            name="newsData"-->
+<!--            type="com.yifan.yffinancialinfo.bean.responsebean.home.NewData" />-->
+<!--    </data>-->
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -23,7 +22,7 @@
             android:textColor="@color/color_fbbc04"
             android:drawableRight="@mipmap/ic_hot"
             android:drawablePadding="@dimen/dimen_8"
-             />
+            android:text="头条"/>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_view"

@@ -7,13 +7,17 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
 import androidx.databinding.ViewDataBinding;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.yifan.yffinancialinfo.BR;
 import com.yifan.yffinancialinfo.R;
 import com.yifan.yffinancialinfo.bean.responsebean.home.HomeData;
+import com.yifan.yffinancialinfo.bean.responsebean.home.NewData;
 
 import java.util.List;
+
+import static com.yifan.yffinancialinfo.config.App.getContext;
 
 /**
  * @Description:
@@ -53,10 +57,10 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     /**
      * 改变数据
      *
-     * @param newItemDatas
+     * @param homeData
      */
-    public void onItemDatasChanged(List<HomeData> newItemDatas) {
-        this.mList = newItemDatas;
+    public void onItemDatasChanged(List<HomeData> homeData) {
+        this.mList = homeData;
         notifyDataSetChanged();
     }
 
@@ -84,11 +88,11 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder commonViewHolder, int position) {
         HomeData homeData = mList.get(position);
 
-        if(homeData.getNewsList() !=null){
+        if (homeData.getNewDatas() != null) {
             //绑定数据
-            ((CommonViewHolder) commonViewHolder).binding.setVariable(BR.newsData,homeData.getNewsList());
-        }else {
-            ((CommonViewHolder) commonViewHolder).binding.setVariable(BR.bannerData, homeData.getBannerData());
+            showNews(((CommonViewHolder) commonViewHolder).binding.getRoot().findViewById(R.id.recycler_view), homeData.getNewDatas());
+//        } else {
+//            ((CommonViewHolder) commonViewHolder).binding.setVariable(BR.bannerData, newData);
         }
         addListener(((CommonViewHolder) commonViewHolder).binding.getRoot(), mList.get(position), position);
         //防止数据闪烁
@@ -98,5 +102,20 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     @Override
     public int getItemCount() {
         return mList != null ? mList.size() : 0;
+    }
+
+    private void showNews(RecyclerView recyclerView, List<NewData> list) {
+        CommonAdapter<NewData> commonAdapter = new CommonAdapter<NewData>(list, R.layout.item_news, BR.newsData) {
+            @Override
+            public void addListener(View root, NewData itemData, int position) {
+                super.addListener(root, itemData, position);
+                root.findViewById(R.id.card_view).setOnClickListener((view) -> {
+//                    addTopClickListener(itemData);
+                });
+            }
+        };
+        recyclerView.setAdapter(commonAdapter);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
+        recyclerView.setLayoutManager(linearLayoutManager);
     }
 }

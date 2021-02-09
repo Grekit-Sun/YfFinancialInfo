@@ -10,7 +10,7 @@ import java.util.List;
  * @Data: 2021-02-08
  */
 public class BaseData<T> {
-    String channel;
-    String num;
-    List<T> list;
+    public String channel;
+    public String num;
+    public List<T> list;
 }

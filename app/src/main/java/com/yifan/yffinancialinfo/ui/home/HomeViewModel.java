@@ -6,7 +6,8 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.yifan.yffinancialinfo.base.viewmodel.BaseViewModel;
-import com.yifan.yffinancialinfo.bean.responsebean.base.BaseBackMsg;
+import com.yifan.yffinancialinfo.bean.responsebean.base.BaseResult;
+import com.yifan.yffinancialinfo.bean.responsebean.base.NewsMsg;
 import com.yifan.yffinancialinfo.bean.responsebean.home.HomeData;
 import com.yifan.yffinancialinfo.bean.responsebean.home.NewData;
 import com.yifan.yffinancialinfo.config.Constants;
@@ -28,6 +29,8 @@ import io.reactivex.functions.Consumer;
  * @Data: 2021-01-18
  */
 public class HomeViewModel extends BaseViewModel {
+
+    private static final String TAG = "HomeViewModel";
 
     private MutableLiveData<List<HomeData>> mHomeList;
     private List<HomeData> mList;
@@ -65,7 +68,8 @@ public class HomeViewModel extends BaseViewModel {
     private void loadBanner() {
 
         if (NetworkUtils.isConnected() && NetworkUtils.getWifiEnabled()) {
-            loadBannerByNet();
+//            loadBannerByNet();
+            //加载资讯数据
             loadNewsByNet();
         } else {
             loadBannerByDb();
@@ -93,20 +97,24 @@ public class HomeViewModel extends BaseViewModel {
         Map<String, Object> map = new HashMap<>();
         map.put("appkey", Constants.News.APP_KEY);
         map.put("channel", "头条");
-        map.put("num", 10);
+        map.put("num", 100);
         map.put("start", 0);
         HttpRequest.getInstance(URL_WY_JD)
                 .getHomeData(map)
                 .compose(HttpFactory.Flowableschedulers())
-                .subscribe(new Consumer<BaseBackMsg<NewData>>() {
+                .subscribe(new Consumer<NewsMsg<NewData>>() {
                     @Override
-                    public void accept(BaseBackMsg<NewData> newsData) throws Exception {
-                        Log.d("RXjava:", newsData.code);
+                    public void accept(NewsMsg<NewData> newsMsg) throws Exception {
+                        HomeData homeData = new HomeData();
+                        homeData.setNewDatas(newsMsg.result.result.list);
+                        mList.add(homeData);
+                        mHomeList.postValue(mList);
+                        Log.d(TAG, "JD Cloud News Receive Success!");
                     }
                 }, new Consumer<Throwable>() {
                     @Override
                     public void accept(Throwable throwable) throws Exception {
-                        Log.e("RXjava:", "onError:" + throwable.toString());
+                        Log.e(TAG, "JD Cloud News Receive Failed...");
                     }
                 });
     }

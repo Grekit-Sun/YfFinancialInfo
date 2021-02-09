@@ -1,5 +1,7 @@
 package com.yifan.yffinancialinfo.bean.responsebean.home;
 
+import java.util.List;
+
 /**
  * @Description:
  * @Author: ZhengXiang Sun
@@ -8,7 +10,15 @@ package com.yifan.yffinancialinfo.bean.responsebean.home;
 public class HomeData {
 
     private BannerData bannerData;
-    private YfNews mYfNews;
+    private List<NewData> newDatas;
+
+    public List<NewData> getNewDatas() {
+        return newDatas;
+    }
+
+    public void setNewDatas(List<NewData> newDatas) {
+        this.newDatas = newDatas;
+    }
 
     public BannerData getBannerData() {
         return bannerData;
@@ -17,13 +27,4 @@ public class HomeData {
     public void setBannerData(BannerData bannerData) {
         this.bannerData = bannerData;
     }
-
-    public YfNews getNewsList() {
-        return mYfNews;
-    }
-
-    public static class YfNews {
-
-    }
-
 }

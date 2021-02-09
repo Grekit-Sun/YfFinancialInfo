@@ -6,7 +6,7 @@ package com.yifan.yffinancialinfo.bean.responsebean.base;
  * @Data:
  */
 public class BaseResult<T> {
-    Integer status;
-    String msg;
-    BaseData<T> result;
+    public Integer status;
+    public String msg;
+    public BaseData<T> result;
 }

@@ -4,10 +4,12 @@ import android.view.View;
 
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.yifan.yffinancialinfo.R;
 import com.yifan.yffinancialinfo.base.BaseFragment;
 import com.yifan.yffinancialinfo.bean.responsebean.home.HomeData;
+import com.yifan.yffinancialinfo.bean.responsebean.home.NewData;
 import com.yifan.yffinancialinfo.databinding.FragmentListBinding;
 import com.yifan.yffinancialinfo.navinterface.ScrollToTop;
 import com.yifan.yffinancialinfo.ui.adapter.HomeAdapter;
@@ -48,6 +50,9 @@ public class HomeFragment extends BaseFragment<FragmentListBinding, HomeViewMode
     @Override
     protected void init() {
         mViewModel.loadHomeData();
+
+        initRecycle();
+        initRefreshLayout();
     }
 
     @Override
@@ -74,6 +79,9 @@ public class HomeFragment extends BaseFragment<FragmentListBinding, HomeViewMode
             @Override
             public void addListener(View root, HomeData itemData, int position) {
                 super.addListener(root, itemData, position);
+                if (itemData != null) {
+
+                }
             }
 
             @Override
@@ -86,5 +94,10 @@ public class HomeFragment extends BaseFragment<FragmentListBinding, HomeViewMode
                 super.addTopCollectListener(itemData);
             }
         };
+        mDataBinding.recycle.setLayoutManager(new LinearLayoutManager(getContext()));
+        mDataBinding.recycle.setAdapter(commonAdapter);
+    }
+
+    private void initRefreshLayout() {
     }
 }

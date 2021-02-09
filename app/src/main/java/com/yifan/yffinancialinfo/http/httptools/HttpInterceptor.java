@@ -32,6 +32,8 @@ public class HttpInterceptor implements Interceptor {
     private static final Charset UTF8 = Charset.forName("UTF-8");
     private static String REQUEST_TAG = "请求";
 
+    private static final String LINE = "============================================================================================================================================================================";
+
     @Override
     public Response intercept(Chain chain) throws IOException {
         if (!NetworkUtils.isConnected()) {
@@ -83,10 +85,14 @@ public class HttpInterceptor implements Interceptor {
      * @param request
      */
     private void logRequest(Request request) {
+        Log.d("Request Log Start",LINE);
+        Log.d("Request Log Start",LINE);
         Log.d(REQUEST_TAG + "method", request.method());
         Log.d(REQUEST_TAG + "url", request.url().toString());
-        Log.d(REQUEST_TAG + "header", request.headers().toString());
+        Log.d(REQUEST_TAG + "header", request.headers().toString().replace("\n","  "));
         if (request.method().equals("GET")) {
+            Log.d("Request Log Stop",LINE);
+            Log.d("Request Log Stop",LINE);
             return;
         }
         try {
@@ -98,6 +104,8 @@ public class HttpInterceptor implements Interceptor {
             buffer.flush();
             buffer.close();
             Log.d(REQUEST_TAG + "参数", parameter);
+            Log.d("Request Log Stop",LINE);
+            Log.d("Request Log Stop",LINE);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -125,7 +133,11 @@ public class HttpInterceptor implements Interceptor {
                 }
             }
             rBody = buffer.clone().readString(charset);
+            Log.d("Response Log Stop",LINE);
+            Log.d("Response Log Stop",LINE);
             Log.d(REQUEST_TAG + "返回值", rBody);
+            Log.d("Response Log Stop",LINE);
+            Log.d("Response Log Stop",LINE);
         } catch (IOException e) {
             e.printStackTrace();
         }

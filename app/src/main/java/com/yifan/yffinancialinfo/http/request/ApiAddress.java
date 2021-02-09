@@ -1,6 +1,6 @@
 package com.yifan.yffinancialinfo.http.request;
 
-import com.yifan.yffinancialinfo.bean.responsebean.base.BaseBackMsg;
+import com.yifan.yffinancialinfo.bean.responsebean.base.NewsMsg;
 import com.yifan.yffinancialinfo.bean.responsebean.home.NewData;
 
 import java.util.Map;
@@ -22,5 +22,5 @@ public interface ApiAddress {
      * @return
      */
     @GET("jisuapi/get")
-    Flowable<BaseBackMsg<NewData>> getHomeData(@QueryMap Map<String, Object> map);
+    Flowable<NewsMsg<NewData>> getHomeData(@QueryMap Map<String, Object> map);
 }
