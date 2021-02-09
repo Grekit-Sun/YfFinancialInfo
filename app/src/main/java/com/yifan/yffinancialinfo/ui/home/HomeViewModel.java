@@ -6,7 +6,6 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.yifan.yffinancialinfo.base.viewmodel.BaseViewModel;
-import com.yifan.yffinancialinfo.bean.responsebean.base.BaseResult;
 import com.yifan.yffinancialinfo.bean.responsebean.base.NewsMsg;
 import com.yifan.yffinancialinfo.bean.responsebean.home.HomeData;
 import com.yifan.yffinancialinfo.bean.responsebean.home.NewData;

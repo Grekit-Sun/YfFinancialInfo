@@ -54,6 +54,9 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     public void addTopCollectListener(HomeData itemData) {
     }
 
+    public void addNewsItemClickListener(NewData news) {
+    }
+
     /**
      * 改变数据
      *
@@ -91,8 +94,6 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         if (homeData.getNewDatas() != null) {
             //绑定数据
             showNews(((CommonViewHolder) commonViewHolder).binding.getRoot().findViewById(R.id.recycler_view), homeData.getNewDatas());
-//        } else {
-//            ((CommonViewHolder) commonViewHolder).binding.setVariable(BR.bannerData, newData);
         }
         addListener(((CommonViewHolder) commonViewHolder).binding.getRoot(), mList.get(position), position);
         //防止数据闪烁
@@ -110,7 +111,7 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             public void addListener(View root, NewData itemData, int position) {
                 super.addListener(root, itemData, position);
                 root.findViewById(R.id.card_view).setOnClickListener((view) -> {
-//                    addTopClickListener(itemData);
+                    addNewsItemClickListener(itemData);
                 });
             }
         };

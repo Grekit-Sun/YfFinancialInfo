@@ -1,5 +1,7 @@
 package com.yifan.yffinancialinfo.ui.home;
 
+import android.content.Intent;
+import android.os.Bundle;
 import android.view.View;
 
 import androidx.lifecycle.Observer;
@@ -12,6 +14,7 @@ import com.yifan.yffinancialinfo.bean.responsebean.home.HomeData;
 import com.yifan.yffinancialinfo.bean.responsebean.home.NewData;
 import com.yifan.yffinancialinfo.databinding.FragmentListBinding;
 import com.yifan.yffinancialinfo.navinterface.ScrollToTop;
+import com.yifan.yffinancialinfo.ui.activity.webview.WebViewActivity;
 import com.yifan.yffinancialinfo.ui.adapter.HomeAdapter;
 
 import java.util.List;
@@ -92,6 +95,16 @@ public class HomeFragment extends BaseFragment<FragmentListBinding, HomeViewMode
             @Override
             public void addTopCollectListener(HomeData itemData) {
                 super.addTopCollectListener(itemData);
+            }
+
+            @Override
+            public void addNewsItemClickListener(NewData news) {
+                super.addNewsItemClickListener(news);
+                Intent intent = new Intent(getActivity(), WebViewActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putString("url", news.url);
+                intent.putExtras(bundle);
+                startActivity(intent);
             }
         };
         mDataBinding.recycle.setLayoutManager(new LinearLayoutManager(getContext()));
