@@ -1,5 +1,6 @@
 package com.yifan.yffinancialinfo.base;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,10 +11,18 @@ import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.databinding.ViewDataBinding;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 
 import com.yifan.yffinancialinfo.R;
 import com.yifan.yffinancialinfo.base.viewmodel.BaseViewModel;
+import com.yifan.yffinancialinfo.config.LoadState;
 import com.yifan.yffinancialinfo.databinding.FragmentBaseBinding;
+import com.yifan.yffinancialinfo.databinding.ViewLoadErrorBinding;
+import com.yifan.yffinancialinfo.databinding.ViewLoadingBinding;
+import com.yifan.yffinancialinfo.databinding.ViewNoDataBinding;
+import com.yifan.yffinancialinfo.databinding.ViewNoNetworkBinding;
+import com.yifan.yffinancialinfo.manager.MyActivityManager;
+import com.yifan.yffinancialinfo.ui.activity.main.MainActivity;
 
 /**
  * @Description: Fragment的基类
@@ -28,6 +37,14 @@ public abstract class BaseFragment<DB extends ViewDataBinding, VM extends BaseVi
     protected VM mViewModel;
 
     private FragmentBaseBinding mFragmentBaseBinding;
+
+    private ViewLoadingBinding mViewLoadingBinding;
+
+    private ViewLoadErrorBinding mViewLoadErrorBinding;
+
+    private ViewNoNetworkBinding mViewNoNetworkBinding;
+
+    private ViewNoDataBinding mViewNoDataBinding;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -53,12 +70,75 @@ public abstract class BaseFragment<DB extends ViewDataBinding, VM extends BaseVi
                 mFragmentBaseBinding.flContentContainer, true);
         bindViewModel();
         mDataBinding.setLifecycleOwner(this);
-//        initLoadState();
+        initLoadState();
 
 //        initCollectState();
 
         init();
         return mFragmentBaseBinding.getRoot();
+    }
+
+    private void initLoadState() {
+        if (mViewModel != null && isSupportLoad()) {
+            mViewModel.loadState.observe(getViewLifecycleOwner(), this::switchLoadView);
+            Activity activity = MyActivityManager.getInstance().getCurrentActivity();
+            if (activity instanceof MainActivity) {
+//                ((MainActivity) activity).mDataBinding.fabTop.setVisibility(View.VISIBLE);
+            }
+        } else {
+            Activity activity = MyActivityManager.getInstance().getCurrentActivity();
+            if (activity instanceof MainActivity) {
+//                ((MainActivity) activity).mDataBinding.fabTop.setVisibility(View.GONE);
+            }
+        }
+    }
+
+    /**
+     * 根据加载状态 ， 切换不同的View
+     *
+     * @param loadState
+     */
+    private void switchLoadView(LoadState loadState) {
+        removeLoadView();
+
+        switch (loadState) {
+            case LOADING:
+                if (mViewLoadingBinding == null) {
+                    mViewLoadingBinding = DataBindingUtil.inflate(getLayoutInflater(), R.layout.view_loading,
+                            mFragmentBaseBinding.flContentContainer, false);
+                }
+                mFragmentBaseBinding.flContentContainer.addView(mViewLoadingBinding.getRoot());
+                break;
+
+            case NO_NETWORK:
+                if (mViewNoNetworkBinding == null) {
+                    mViewNoNetworkBinding = DataBindingUtil.inflate(getLayoutInflater(), R.layout.view_no_network,
+                            mFragmentBaseBinding.flContentContainer, false);
+                    mViewNoNetworkBinding.setViewModel(mViewModel);
+                }
+                mFragmentBaseBinding.flContentContainer.addView(mViewNoNetworkBinding.getRoot());
+                break;
+
+            case NO_DATA:
+                if (mViewNoDataBinding == null) {
+                    mViewNoDataBinding = DataBindingUtil.inflate(getLayoutInflater(), R.layout.view_no_data,
+                            mFragmentBaseBinding.flContentContainer, false);
+                }
+                mFragmentBaseBinding.flContentContainer.addView(mViewNoDataBinding.getRoot());
+                break;
+
+            case ERROR:
+                if (mViewLoadErrorBinding == null) {
+                    mViewLoadErrorBinding = DataBindingUtil.inflate(getLayoutInflater(), R.layout.view_load_error,
+                            mFragmentBaseBinding.flContentContainer, false);
+                    mViewLoadErrorBinding.setViewModel(mViewModel);
+                }
+                mFragmentBaseBinding.flContentContainer.addView(mViewLoadErrorBinding.getRoot());
+                break;
+
+            default:
+                break;
+        }
     }
 
     private void removeLoadView() {

@@ -65,6 +65,10 @@ public class HomeViewModel extends BaseViewModel {
      * 获取首页轮播图
      */
     private void loadBanner() {
+//        if(!NetworkUtils.isConnected()){
+//            loadState.postValue(LoadState.NO_NETWORK);
+//            return;
+//        }
 
         if (NetworkUtils.isConnected() && NetworkUtils.getWifiEnabled()) {
 //            loadBannerByNet();

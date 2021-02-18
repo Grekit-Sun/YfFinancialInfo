@@ -15,7 +15,12 @@ import androidx.databinding.ViewDataBinding;
 
 import com.yifan.yffinancialinfo.R;
 import com.yifan.yffinancialinfo.base.viewmodel.BaseViewModel;
+import com.yifan.yffinancialinfo.config.LoadState;
 import com.yifan.yffinancialinfo.databinding.ActivityBaseBinding;
+import com.yifan.yffinancialinfo.databinding.ViewLoadErrorBinding;
+import com.yifan.yffinancialinfo.databinding.ViewLoadingBinding;
+import com.yifan.yffinancialinfo.databinding.ViewNoDataBinding;
+import com.yifan.yffinancialinfo.databinding.ViewNoNetworkBinding;
 
 /**
  * @Description:
@@ -29,6 +34,14 @@ public abstract class BaseActivity<DB extends ViewDataBinding, VM extends BaseVi
     protected VM mViewModel;
 
     private ActivityBaseBinding mActivityBaseBinding;
+
+    private ViewLoadingBinding mViewLoadingBinding;
+
+    private ViewLoadErrorBinding mViewLoadErrorBinding;
+
+    private ViewNoNetworkBinding mViewNoNetworkBinding;
+
+    private ViewNoDataBinding mViewNoDataBinding;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -58,8 +71,7 @@ public abstract class BaseActivity<DB extends ViewDataBinding, VM extends BaseVi
 
     private void initLoadState() {
         if (mViewModel != null && isSupportLoad()) {
-            mViewModel.loadState.observe(this, (loadState) -> {
-            });
+            mViewModel.loadState.observe(this, this::switchLoadView);
         }
     }
 
@@ -125,4 +137,52 @@ public abstract class BaseActivity<DB extends ViewDataBinding, VM extends BaseVi
      * 初始化
      */
     protected abstract void init();
+
+    private void switchLoadView(LoadState loadState) {
+        removeLoadView();
+        switch (loadState){
+            case LOADING:
+                if (mViewLoadingBinding == null) {
+                    mViewLoadingBinding = DataBindingUtil.inflate(getLayoutInflater(), R.layout.view_loading,
+                            mActivityBaseBinding.flContentContainer, false);
+                }
+                mActivityBaseBinding.flContentContainer.addView(mViewLoadingBinding.getRoot());
+                break;
+
+            case NO_NETWORK:
+                if (mViewNoNetworkBinding == null) {
+                    mViewNoNetworkBinding = DataBindingUtil.inflate(getLayoutInflater(), R.layout.view_no_network,
+                            mActivityBaseBinding.flContentContainer, false);
+                    mViewNoNetworkBinding.setViewModel(mViewModel);
+                }
+                mActivityBaseBinding.flContentContainer.addView(mViewNoNetworkBinding.getRoot());
+                break;
+
+            case NO_DATA:
+                if (mViewNoDataBinding == null) {
+                    mViewNoDataBinding = DataBindingUtil.inflate(getLayoutInflater(), R.layout.view_no_data,
+                            mActivityBaseBinding.flContentContainer, false);
+                }
+                mActivityBaseBinding.flContentContainer.addView(mViewNoDataBinding.getRoot());
+                break;
+
+            case ERROR:
+                if (mViewLoadErrorBinding == null) {
+                    mViewLoadErrorBinding = DataBindingUtil.inflate(getLayoutInflater(), R.layout.view_load_error,
+                            mActivityBaseBinding.flContentContainer, false);
+                }
+                mActivityBaseBinding.flContentContainer.addView(mViewLoadErrorBinding.getRoot());
+                break;
+
+            default:
+                break;
+        }
+    }
+
+    private void removeLoadView() {
+        int childCount = mActivityBaseBinding.flContentContainer.getChildCount();
+        if (childCount > 1) {
+            mActivityBaseBinding.flContentContainer.removeViews(1, childCount - 1);
+        }
+    }
 }
