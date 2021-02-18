@@ -64,14 +64,13 @@ public class HomeFragment extends BaseFragment<FragmentListBinding, HomeViewMode
     }
 
     private void initDataChange() {
-        mViewModel.getHomeList().observe(this, new Observer<List<HomeData>>() {
-            @Override
-            public void onChanged(List<HomeData> homeDataList) {
-                commonAdapter.onItemDatasChanged(homeDataList);
-                mDataBinding.refreshLayout.finishRefresh();
-                mDataBinding.refreshLayout.finishLoadMore();
-            }
-        });
+        mViewModel.getHomeList().observe(this, this::onDataChange);
+    }
+
+    private void onDataChange(List<HomeData> homeDataList) {
+        commonAdapter.onItemDatasChanged(homeDataList);
+        mDataBinding.refreshLayout.finishRefresh();
+        mDataBinding.refreshLayout.finishLoadMore();
     }
 
     /**

@@ -112,11 +112,13 @@ public class HomeViewModel extends BaseViewModel {
                         homeData.setNewDatas(newsMsg.result.result.list);
                         mList.add(homeData);
                         mHomeList.postValue(mList);
+                        loadState.postValue(LoadState.SUCCESS);
                         Log.d(TAG, "JD Cloud News Receive Success!");
                     }
                 }, new Consumer<Throwable>() {
                     @Override
                     public void accept(Throwable throwable) throws Exception {
+                        loadState.postValue(LoadState.ERROR);
                         Log.e(TAG, "JD Cloud News Receive Failed...");
                     }
                 });

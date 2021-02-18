@@ -2,7 +2,11 @@ package com.yifan.yffinancialinfo.ui.activity.main;
 
 import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
+import androidx.navigation.ui.NavigationUI;
 
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.yifan.yffinancialinfo.R;
 import com.yifan.yffinancialinfo.base.BaseActivity;
 import com.yifan.yffinancialinfo.databinding.ActivityMainBinding;
@@ -14,6 +18,8 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
 
     @BindView(R.id.toolbar)
     Toolbar mToolbar;
+    @BindView(R.id.nav_view_bottom)
+    BottomNavigationView mBottomNavigationView;
 
     @Override
     protected int getLayoutResId() {
@@ -46,6 +52,8 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
         }
         mToolbar.setTitle(R.string.app_name);
         setSupportActionBar(mToolbar);
+        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
+        NavigationUI.setupWithNavController(mBottomNavigationView, navController);
     }
 
 
